@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "displayeditorfabric",
+  "version": "${version}",
+  "name": "DisplayEditorFabric",
+  "description": "디스플레이 엔티티를 쉽게 조작하는 명령어를 추가합니다",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/displayeditorfabric/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "kr.blugon.displayeditorfabric.client.DisplayEditorFabricClient"
+    ],
+    "main": [
+      "kr.blugon.displayeditorfabric.DisplayEditorFabric"
+    ]
+  },
+  "mixins": [
+    "displayeditorfabric.mixins.json",
+    {
+      "config": "displayeditorfabric.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
