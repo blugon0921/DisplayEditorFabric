@@ -53,6 +53,7 @@ private fun isLatestVersion(): Pair<Boolean, Version>? {
         return if (response.statusCode() == 200) {
             val json = Json.parseToJsonElement(response.body())
             val originalVersion = json.jsonObject["tag_name"]?.jsonPrimitive?.content?: return null
+            if(versionMMP(originalVersion) == versionMMP(nowVersionString)) return null
             val version = Version(versionMMP(originalVersion), originalVersion)
             val latestVersion = version.getMoreLatest(nowVersion)
             val isLatest = latestVersion.original == nowVersion.original
@@ -63,7 +64,7 @@ private fun isLatestVersion(): Pair<Boolean, Version>? {
 
 
 private fun versionMMP(original: String): String {
-    return original.split("+").first().replace("v", "")
+    return original.replace("v", "").replace("mc", "").split("+").first()
 }
 
 private class Version(val major: Int, val minor: Int, val patch: Int, val original: String) {

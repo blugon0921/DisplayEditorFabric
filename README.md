@@ -1,7 +1,7 @@
 # Display Editor Fabric
 [![Java](https://img.shields.io/badge/Java-21-FF7700.svg?logo=java)]()
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.20-186FCC.svg?logo=kotlin)]()
-[![PaperMC](https://img.shields.io/badge/Latest-1.0.1+mc1.21.1-222222.svg)]()
+[![PaperMC](https://img.shields.io/badge/Latest-v1.0.2+mc1.21.1-222222.svg)]()
 
 # command
 /displayentity (dp)
