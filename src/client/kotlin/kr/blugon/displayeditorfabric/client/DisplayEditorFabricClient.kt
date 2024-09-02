@@ -1,24 +1,21 @@
 package kr.blugon.displayeditorfabric.client
 
 import com.mojang.brigadier.context.CommandContext
-import com.sk89q.worldedit.WorldEdit
-import kr.blugon.displayeditorfabric.client.commands.registerCommand
-import kr.blugon.displayeditorfabric.client.commands.worldedit.registerWorldEditCommand
-import kr.blugon.displayeditorfabric.client.screen.BlockDisplayCreateGui
-import kr.blugon.displayeditorfabric.client.screen.BlockDisplayCreateScreen
 import kr.blugon.displayeditorfabric.client.api.NamedTextColor
 import kr.blugon.displayeditorfabric.client.api.color
 import kr.blugon.displayeditorfabric.client.api.literal
 import kr.blugon.displayeditorfabric.client.api.sendFeedback
+import kr.blugon.displayeditorfabric.client.commands.registerCommand
+import kr.blugon.displayeditorfabric.client.commands.worldedit.registerWorldEditCommand
+import kr.blugon.displayeditorfabric.client.events.registerJoinEvent
 import kr.blugon.kotlinbrigadierfabric.get
 import net.fabricmc.api.ClientModInitializer
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.MinecraftClient
 import net.minecraft.command.EntitySelector
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
-import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.server.world.ServerWorld
 import net.minecraft.text.Text
 import net.minecraft.world.World
 
@@ -75,13 +72,15 @@ inline fun <reified T> World.spawnEntity(location: WorldlessLocation, entityType
 //    }
 //}
 
-var worldedit: WorldEdit? = null
 class DisplayEditorFabricClient : ClientModInitializer {
     override fun onInitializeClient() {
+        //Commands
         registerCommand()
-        worldedit = WorldEdit.getInstance()
-        if(worldedit != null) {
+        if(FabricLoader.getInstance().isModLoaded("worldedit")) {
             registerWorldEditCommand()
         }
+
+        //Events
+        registerJoinEvent()
     }
 }

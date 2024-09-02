@@ -1,13 +1,13 @@
 package kr.blugon.displayeditorfabric.client.commands.worldedit
 
 import com.sk89q.worldedit.EmptyClipboardException
+import com.sk89q.worldedit.WorldEdit
 import com.sk89q.worldedit.fabric.FabricAdapter
 import com.sk89q.worldedit.math.BlockVector3
 import kr.blugon.displayeditorfabric.client.Location
 import kr.blugon.displayeditorfabric.client.api.*
 import kr.blugon.displayeditorfabric.client.api.display.blockState
 import kr.blugon.displayeditorfabric.client.location
-import kr.blugon.displayeditorfabric.client.worldedit
 import kr.blugon.kotlinbrigadierfabric.registerCommandHandlers
 import net.minecraft.block.Blocks
 import net.minecraft.entity.EntityType
@@ -16,6 +16,7 @@ import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.util.math.BlockPos
 
 fun registerWorldEditCommand() {
+    val worldedit = WorldEdit.getInstance() ?: return
     registerCommandHandlers {
         register("/pastedisplay", "/paste-d") {
             require { this.hasPermissionLevel(2) }
@@ -23,22 +24,22 @@ fun registerWorldEditCommand() {
 
             then("-not-remove") {
                 executes {
-                    this.pasteDisplay(false)
+                    this.pasteDisplay(false, worldedit)
                 }
             }
 
             executes {
-                this.pasteDisplay(true)
+                this.pasteDisplay(true, worldedit)
             }
         }
     }
 }
 
 
-private fun ServerCommandSource.pasteDisplay(removeBlock: Boolean = true) {
+private fun ServerCommandSource.pasteDisplay(removeBlock: Boolean = true, worldedit: WorldEdit) {
     val world = location.world
     val player = this.player?: return this.sendFeedback("알 수 없는 오류가 발생했습니다. :(".literal.color(NamedTextColor.RED))
-    val session = worldedit!!.sessionManager.getIfPresent(FabricAdapter.adaptPlayer(player)) ?: return this.sendFeedback("현재 클립보드가 비어있습니다. //copy를 먼저 사용하세요.".literal.color(NamedTextColor.RED))
+    val session = worldedit.sessionManager.getIfPresent(FabricAdapter.adaptPlayer(player)) ?: return this.sendFeedback("현재 클립보드가 비어있습니다. //copy를 먼저 사용하세요.".literal.color(NamedTextColor.RED))
     val clipboard = try {
         session.clipboard?.clipboard
     } catch (e: EmptyClipboardException) { return this.sendFeedback("현재 클립보드가 비어있습니다. //copy를 먼저 사용하세요.".literal.color(NamedTextColor.RED)) }

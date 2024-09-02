@@ -50,7 +50,6 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 
     modImplementation("com.sk89q.worldedit:worldedit-fabric-mc1.21:latest.release")
-    modImplementation("io.github.cottonmc:LibGui:latest.release")
 }
 
 tasks.processResources {
