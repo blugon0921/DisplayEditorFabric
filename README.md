@@ -24,6 +24,9 @@
 /dp edit text [JSON_Text] [backgroundColor]
 
 
+## etc
+/dp copydata [TargetEntity]
+
 ## With WorldEdit
 
 //pastedisplay(paste-d)<br>
