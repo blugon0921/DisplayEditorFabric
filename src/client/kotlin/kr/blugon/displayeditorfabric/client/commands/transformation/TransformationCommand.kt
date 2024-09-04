@@ -22,7 +22,6 @@ fun BrigadierNode.thenTransformationEdit() {
                     Transformation.entries.filter { !listOf(first, second).contains(it) }.forEach third@{ third->
                         thenAction(third, listOf(first, second, third)) {
                             Transformation.entries.filter { !listOf(first, second, third).contains(it) }.forEach fourth@{ fourth->
-                                if(fourth == third || fourth == second || fourth == first) return@fourth
                                 thenAction(fourth, listOf(first, second, third, fourth))
                             }
                         }
