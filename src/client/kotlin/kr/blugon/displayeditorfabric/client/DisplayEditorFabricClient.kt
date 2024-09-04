@@ -33,7 +33,7 @@ val ServerCommandSource.location: Location
     }
 
 
-fun Collection<Entity>.isDisplayList(source: ServerCommandSource, type: EntityType<*>? = null, typeName: String = "표지"): Boolean {
+fun Collection<Entity>.isDisplayList(source: ServerCommandSource, type: EntityType<*>? = null, typeName: String = "표시"): Boolean {
     if(this.isEmpty()) {
         source.sendFeedback("개체를 찾을 수 없습니다".literal.color(NamedTextColor.RED))
         return false
@@ -45,8 +45,8 @@ fun Collection<Entity>.isDisplayList(source: ServerCommandSource, type: EntityTy
             return false
         } else if(type == null) {
             if(entity !is DisplayEntity) {
-                if(this.size == 1) source.sendFeedback(Text.literal("개체가 표지가 아닙니다").color(NamedTextColor.RED))
-                else if(1 < this.size) source.sendFeedback(Text.literal("표지가 아닌 개체가 포함되어있습니다").color(NamedTextColor.RED))
+                if(this.size == 1) source.sendFeedback(Text.literal("개체가 표시가 아닙니다").color(NamedTextColor.RED))
+                else if(1 < this.size) source.sendFeedback(Text.literal("표시가 아닌 개체가 포함되어있습니다").color(NamedTextColor.RED))
                 return false
             }
         }

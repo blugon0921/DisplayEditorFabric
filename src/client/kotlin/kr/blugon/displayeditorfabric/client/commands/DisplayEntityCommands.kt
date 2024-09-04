@@ -66,7 +66,7 @@ fun registerCommand() {
                             nbt.putFromAnotherNbt<Byte>("text_opacity", -1, entity.nbt)
                         }
                         else -> {
-                            this.sendFeedback("개체가 표지가 아닙니다".literal.color(NamedTextColor.RED))
+                            this.sendFeedback("개체가 표시가 아닙니다".literal.color(NamedTextColor.RED))
                             return@executesWithEntity
                         }
                     }

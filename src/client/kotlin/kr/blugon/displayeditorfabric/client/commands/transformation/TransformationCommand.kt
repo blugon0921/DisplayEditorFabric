@@ -63,7 +63,7 @@ private fun BrigadierNode.thenAction(action: Transformation, keys: List<Transfor
                         }
                     }
                 }
-                this.sendFeedback(Text.literal("표지 ${entities.size}개의 ${message.substring(0, message.length-2)} 바꿨습니다"))
+                this.sendFeedback(Text.literal("표시 ${entities.size}개의 ${message.substring(0, message.length-2)} 바꿨습니다"))
             }
         }
 
