@@ -2,6 +2,9 @@ package kr.blugon.displayeditorfabric.client.commands
 
 import com.mojang.brigadier.context.CommandContext
 import kr.blugon.displayeditorfabric.client.api.*
+import kr.blugon.displayeditorfabric.client.commands.position.thenPositionEdit
+import kr.blugon.displayeditorfabric.client.commands.position.thenRotationEdit
+import kr.blugon.displayeditorfabric.client.commands.transformation.thenTransformationEdit
 import kr.blugon.kotlinbrigadierfabric.BrigadierNode
 import kr.blugon.kotlinbrigadierfabric.get
 import kr.blugon.kotlinbrigadierfabric.registerCommandHandlers
@@ -22,36 +25,20 @@ fun registerCommand() {
         register("displayeditor", "dp") {
             require { hasPermissionLevel(2) } //hasOp
 
-//            then("test") {
-//                require { player != null }
-//
-//                executes {
-//                    player!!.openGui()
-//                }
-//            }
-
             then("edit") {
-                thenWithEntities("block") {
-                    thenBlockDisplayEdit()
-                }
-                thenWithEntities("item") {
-                    thenItemDisplayEdit()
-                }
-                thenWithEntities("text") {
-                    thenTextDisplayEdit()
-                }
+                thenWithEntities("block") { thenBlockDisplayEdit() }
+                thenWithEntities("item") { thenItemDisplayEdit() }
+                thenWithEntities("text") { thenTextDisplayEdit() }
+
+                thenWithEntities("transformation") { thenTransformationEdit() }
+                thenWithEntities("position") { thenPositionEdit() }
+                thenWithEntities("rotation") { thenRotationEdit() }
             }
 
             then("spawn") {
-                then("block") {
-                    thenBlockDisplaySpawn()
-                }
-                then("item") {
-                    thenItemDisplaySpawn()
-                }
-                then("text") {
-                    thenTextDisplaySpawn()
-                }
+                then("block") { thenBlockDisplaySpawn() }
+                then("item") { thenItemDisplaySpawn() }
+                then("text") { thenTextDisplaySpawn() }
             }
 
             then("copydata") {

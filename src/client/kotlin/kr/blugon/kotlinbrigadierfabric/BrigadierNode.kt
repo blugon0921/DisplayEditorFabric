@@ -23,7 +23,8 @@ interface BrigadierNode {
     operator fun String.invoke(node: LiteralBrigadierNode.() -> Unit) = then(this, node)
 }
 
-class LiteralBrigadierNode(val builder: LiteralArgumentBuilder<ServerCommandSource>, override val registryAccess: CommandRegistryAccess, override val environment: CommandManager.RegistrationEnvironment): BrigadierNode {
+class LiteralBrigadierNode(val builder: LiteralArgumentBuilder<ServerCommandSource>, override val registryAccess: CommandRegistryAccess, override val environment: CommandManager.RegistrationEnvironment):
+    BrigadierNode {
     override fun then(literal: String, node: LiteralBrigadierNode.() -> Unit) {
         builder.then(LiteralArgumentBuilder.literal<ServerCommandSource?>(literal).apply {
             node(LiteralBrigadierNode(this, registryAccess, environment))
@@ -56,7 +57,8 @@ class LiteralBrigadierNode(val builder: LiteralArgumentBuilder<ServerCommandSour
         }
     }
 }
-class RequiredBrigadierNode <T> (val builder: RequiredArgumentBuilder<ServerCommandSource, T>, override val registryAccess: CommandRegistryAccess, override val environment: CommandManager.RegistrationEnvironment): BrigadierNode {
+class RequiredBrigadierNode <T> (val builder: RequiredArgumentBuilder<ServerCommandSource, T>, override val registryAccess: CommandRegistryAccess, override val environment: CommandManager.RegistrationEnvironment):
+    BrigadierNode {
     override fun then(literal: String, node: LiteralBrigadierNode.() -> Unit) {
         builder.then(LiteralArgumentBuilder.literal<ServerCommandSource>(literal).apply {
             node(LiteralBrigadierNode(this, registryAccess, environment))
@@ -82,7 +84,11 @@ class RequiredBrigadierNode <T> (val builder: RequiredArgumentBuilder<ServerComm
     }
     fun suggests(isSharedSuggestion: Boolean = true, suggest: ServerCommandSource.(CommandContext<ServerCommandSource>) -> List<String>) {
         builder.suggests { context, suggestionsBuilder ->
-            if(isSharedSuggestion) SharedSuggestionProvider.suggest(suggest(context.source, context), context, suggestionsBuilder)
+            if(isSharedSuggestion) SharedSuggestionProvider.suggest(
+                suggest(context.source, context),
+                context,
+                suggestionsBuilder
+            )
             else {
                 suggest(context.source, context).forEach { suggestion->
                     suggestionsBuilder.suggest(suggestion)

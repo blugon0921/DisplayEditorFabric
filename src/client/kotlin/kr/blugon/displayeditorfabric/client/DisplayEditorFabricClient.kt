@@ -11,10 +11,10 @@ import kr.blugon.displayeditorfabric.client.events.registerJoinEvent
 import kr.blugon.kotlinbrigadierfabric.get
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.loader.api.FabricLoader
-import net.minecraft.client.MinecraftClient
 import net.minecraft.command.EntitySelector
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
 import net.minecraft.world.World
@@ -33,16 +33,22 @@ val ServerCommandSource.location: Location
     }
 
 
-fun Collection<Entity>.isDisplayList(source: ServerCommandSource, type: EntityType<*>? = null, typeName: String = "표시"): Boolean {
+fun Collection<Entity>.isDisplayList(source: ServerCommandSource, type: EntityType<*>? = null, typeName: String = "표지"): Boolean {
     if(this.isEmpty()) {
         source.sendFeedback("개체를 찾을 수 없습니다".literal.color(NamedTextColor.RED))
         return false
     }
     this.forEach { entity ->
-        if(entity.type != type) {
+        if(type != null && entity.type != type) {
             if(this.size == 1) source.sendFeedback(Text.literal("개체가 ${typeName}가 아닙니다").color(NamedTextColor.RED))
             else if(1 < this.size) source.sendFeedback(Text.literal("${typeName}가 아닌 개체가 포함되어있습니다").color(NamedTextColor.RED))
             return false
+        } else if(type == null) {
+            if(entity !is DisplayEntity) {
+                if(this.size == 1) source.sendFeedback(Text.literal("개체가 표지가 아닙니다").color(NamedTextColor.RED))
+                else if(1 < this.size) source.sendFeedback(Text.literal("표지가 아닌 개체가 포함되어있습니다").color(NamedTextColor.RED))
+                return false
+            }
         }
     }
     return true
