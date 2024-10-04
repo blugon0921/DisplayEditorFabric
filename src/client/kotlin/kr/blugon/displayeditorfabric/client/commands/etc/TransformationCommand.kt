@@ -1,4 +1,4 @@
-package kr.blugon.displayeditorfabric.client.commands.transformation
+package kr.blugon.displayeditorfabric.client.commands.etc
 
 import com.mojang.brigadier.arguments.FloatArgumentType.floatArg
 import com.mojang.brigadier.context.CommandContext

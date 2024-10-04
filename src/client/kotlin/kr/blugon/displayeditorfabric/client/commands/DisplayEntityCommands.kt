@@ -2,25 +2,33 @@ package kr.blugon.displayeditorfabric.client.commands
 
 import com.mojang.brigadier.context.CommandContext
 import kr.blugon.displayeditorfabric.client.api.*
-import kr.blugon.displayeditorfabric.client.commands.position.thenPositionEdit
-import kr.blugon.displayeditorfabric.client.commands.position.thenRotationEdit
-import kr.blugon.displayeditorfabric.client.commands.transformation.thenTransformationEdit
+import kr.blugon.displayeditorfabric.client.commands.etc.*
 import kr.blugon.kotlinbrigadierfabric.BrigadierNode
+import kr.blugon.kotlinbrigadierfabric.arguments.BillboardArgumentType
 import kr.blugon.kotlinbrigadierfabric.get
 import kr.blugon.kotlinbrigadierfabric.registerCommandHandlers
+import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry
 import net.minecraft.client.MinecraftClient
 import net.minecraft.command.EntitySelector
 import net.minecraft.command.argument.EntityArgumentType.entities
 import net.minecraft.command.argument.EntityArgumentType.entity
+import net.minecraft.command.argument.serialize.ConstantArgumentSerializer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.decoration.DisplayEntity.BlockDisplayEntity
 import net.minecraft.entity.decoration.DisplayEntity.ItemDisplayEntity
 import net.minecraft.entity.decoration.DisplayEntity.TextDisplayEntity
 import net.minecraft.nbt.*
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.util.Identifier
 
 
 fun registerCommand() {
+    ArgumentTypeRegistry.registerArgumentType(
+        Identifier.of("displayeditorfabric", "billboard"),
+        BillboardArgumentType::class.java,
+        ConstantArgumentSerializer.of(BillboardArgumentType::billboard)
+    )
+
     registerCommandHandlers {
         register("displayeditor", "dp") {
             require { hasPermissionLevel(2) } //hasOp
@@ -33,6 +41,8 @@ fun registerCommand() {
                 thenWithEntities("transformation") { thenTransformationEdit() }
                 thenWithEntities("position") { thenPositionEdit() }
                 thenWithEntities("rotation") { thenRotationEdit() }
+                thenWithEntities("billboard") { thenBillboardEdit() }
+                thenWithEntities("teleport_duration") { thenTeleportDurationEdit() }
             }
 
             then("spawn") {
@@ -145,8 +155,8 @@ fun BrigadierNode.thenWithEntity(literal: String? = null, then: BrigadierNode.()
 }
 
 fun BrigadierNode.thenWithEntities(literal: String, then: BrigadierNode.() -> Unit) {
-    then(literal) {
-        then("entities" to entities()) {
+    then("entities" to entities()) {
+        then(literal) {
             then(this)
         }
     }

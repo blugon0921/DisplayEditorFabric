@@ -71,13 +71,6 @@ inline fun <reified T> World.spawnEntity(location: WorldlessLocation, entityType
     } as T
 }
 
-//fun PlayerEntity.openGui() {
-//    val client = MinecraftClient.getInstance()
-//    client.execute {
-//        client.setScreen(BlockDisplayCreateScreen(BlockDisplayCreateGui()))
-//    }
-//}
-
 class DisplayEditorFabricClient : ClientModInitializer {
     override fun onInitializeClient() {
         //Commands

@@ -1,4 +1,4 @@
-package kr.blugon.displayeditorfabric.client.commands.position
+package kr.blugon.displayeditorfabric.client.commands.etc
 
 import kr.blugon.displayeditorfabric.client.api.sendFeedback
 import kr.blugon.displayeditorfabric.client.getEntities
@@ -10,8 +10,6 @@ import net.minecraft.command.argument.RotationArgumentType.rotation
 import net.minecraft.command.argument.Vec3ArgumentType.vec3
 import net.minecraft.network.packet.s2c.play.PositionFlag
 import net.minecraft.text.Text
-import kotlin.math.pow
-import kotlin.math.roundToInt
 
 fun BrigadierNode.thenPositionEdit() {
     then("position" to vec3()) {

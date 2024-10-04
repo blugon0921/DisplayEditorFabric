@@ -1,6 +1,7 @@
 package kr.blugon.displayeditorfabric.client.api
 
 import com.google.gson.Gson
+import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.serialization.JsonOps
 import net.minecraft.component.DataComponentTypes
 import net.minecraft.component.type.ItemEnchantmentsComponent
@@ -58,6 +59,32 @@ val ItemStack.nbt: NbtCompound?
 //        return if(namespacedKey == null || id == null) null
 //        else "$namespacedKey:$id"
 //    }
+
+var DisplayEntity.billboard: Billboard
+    get() {
+        return Billboard[this.nbt.getString("billboard")?: "fixed"]!!
+    }
+    set(value) {
+        this.editNbt { nbt->
+            nbt.putString("billboard", value.name.lowercase())
+        }
+    }
+
+enum class Billboard {
+    Fixed,
+    Vertical,
+    Horizontal,
+    Center;
+
+    companion object {
+        operator fun get(name: String): Billboard? {
+            entries.forEach {
+                if(it.name.lowercase() == name) return it
+            }
+            return null
+        }
+    }
+}
 
 
 val DisplayEntity.transformation: DisplayTransformation
