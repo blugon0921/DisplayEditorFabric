@@ -10,27 +10,31 @@
 /dp spawn block [blockType][Properties] [x] [y] [z] [yaw] [pitch] [-center]
 
 /dp spawn item with [itemType][components] [x] [y] [z] [yaw] [pitch]<br>
-/dp spawn item from [block/entity] [x,y,z/targetEntity] [Slot] [x] [y] [z] [yaw] [pitch]
+/dp spawn item from [block/entity] [x,y,z/Entity] [Slot] [x] [y] [z] [yaw] [pitch]
 
 /dp spawn text [JSON_Text] [x] [y] [z] [yaw] [pitch] [backgroundColor]
 
 
 ## edit
-/dp edit block [TargetEntity] [blockType][Properties]
+/dp edit [Entity] block  [blockType][Properties]
 
-/dp edit item with [itemType][components]<br>
-/dp edit item from [block/entity] [x,y,z/targetEntity] [Slot]
+/dp edit [Entity] item with [itemType][components]<br>
+/dp edit [Entity] item from [block/entity] [x,y,z/Entity] [Slot]
 
-/dp edit text [JSON_Text] [backgroundColor]
+/dp edit [Entity] text [JSON_Text] [backgroundColor]
 
-/dp edit transformation [TargetEntity] [values]
+/dp edit [Entity] transformation [values]
 
-/dp edit position [TargetEntity] [x] [y] [z]
-/dp edit rotation [TargetEntity] [yaw] [pitch]
+/dp edit [Entity] position [x] [y] [z]<br>
+/dp edit [Entity] rotation [yaw] [pitch]<br>
+/dp edit [Entity] teleport_duration [int]
+
+/dp edit [Entity] billboard [fixed/center/vertical/horizontal]
+
 
 
 ## etc
-/dp copydata [TargetEntity]
+/dp copydata [Entity]
 
 ## With WorldEdit
 
