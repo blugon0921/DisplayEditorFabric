@@ -16,7 +16,7 @@ val String?.literal: MutableText
     get() = Text.literal(this?: "null")
 
 val Block.translateKey: TranslationKey get() = TranslationKey(this.translationKey)
-val ItemStack.translateKey: TranslationKey get() = TranslationKey(this.translationKey)
+//val ItemStack.translateKey: TranslationKey get() = TranslationKey(this.item.translationKey)
 val EntityType<*>.translateKey: TranslationKey get() = TranslationKey(this.translationKey)
 
 fun Block.displayName(): MutableText = this.translateKey.translate()

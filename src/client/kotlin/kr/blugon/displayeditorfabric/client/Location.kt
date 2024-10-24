@@ -23,7 +23,7 @@ open class WorldlessLocation(
     constructor(position: Vec3d) : this(position.x, position.y, position.z, 0f, 0f)
     constructor(position: Vec3d, rotation: Vec2f) : this(position.x, position.y, position.z, rotation.y, rotation.x)
 
-    fun toLocation(world: ServerWorld): Location = Location(world, x, y, z, yaw, pitch)
+    fun toLocation(world: World): Location = Location(world, x, y, z, yaw, pitch)
 
     val position: Vec3d
         get() = Vec3d(x, y, z)
@@ -31,8 +31,8 @@ open class WorldlessLocation(
     val rotation: Vec2f
         get() = Vec2f(yaw, pitch)
 
-    inline fun <reified T> spawnEntity(world: ServerWorld, entityType: EntityType<*>, spawnBefore: (T) -> Unit = {}): T {
-        return world.spawnEntity(this, entityType, spawnBefore)
+    inline fun <reified T> spawnEntity(world: World, entityType: EntityType<*>, spawnBefore: (T) -> Unit = {}): T {
+        return world.spawnEntityBukkitStyle(this, entityType, spawnBefore)
     }
 
     val blockX: Int
@@ -62,7 +62,7 @@ data class Location(
     constructor(world: World, position: Vec3d, rotation: Vec2f) : this(world, position.x, position.y, position.z, rotation.y, rotation.x)
 
     inline fun <reified T> spawnEntity(entityType: EntityType<*>, spawnBefore: (T) -> Unit = {}): T {
-        return world.spawnEntity(this, entityType, spawnBefore)
+        return world.spawnEntityBukkitStyle(this, entityType, spawnBefore)
     }
 }
 
@@ -75,14 +75,14 @@ fun CommandContext<ServerCommandSource>.getLocation(world: World, positionKey: S
     val positionArg: PosArgument = this[positionKey]
     val rotationArg: PosArgument = this[rotationKey]
 
-    val position = positionArg.toAbsolutePos(this.source)
-    val rotation = rotationArg.toAbsoluteRotation(this.source)
+    val position = positionArg.getPos(this.source)
+    val rotation = rotationArg.getRotation(this.source)
     return Location(world, position, rotation)
 }
 
 fun CommandContext<ServerCommandSource>.getLocationWithoutRotation(world: World, positionKey: String): Location {
     val positionArg: PosArgument = this[positionKey]
 
-    val position = positionArg.toAbsolutePos(this.source)
+    val position = positionArg.getPos(this.source)
     return Location(world, position)
 }

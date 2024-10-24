@@ -14,6 +14,7 @@ import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.command.EntitySelector
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
+import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.decoration.DisplayEntity
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
@@ -63,8 +64,8 @@ fun Collection<Entity>.isTextDisplayList(source: ServerCommandSource): Boolean {
     return this.isDisplayList(source, EntityType.TEXT_DISPLAY, "텍스트 표시")
 }
 
-inline fun <reified T> World.spawnEntity(location: WorldlessLocation, entityType: EntityType<*>, spawnBefore: (T) -> Unit = {}): T {
-    return entityType.create(this).also {
+inline fun <reified T> World.spawnEntityBukkitStyle(location: WorldlessLocation, entityType: EntityType<*>, spawnBefore: (T) -> Unit = {}): T {
+    return entityType.create(this, SpawnReason.COMMAND).also {
         it?.refreshPositionAndAngles(location.position, location.yaw, location.pitch)
         spawnBefore(it as T)
         this.spawnEntity(it)

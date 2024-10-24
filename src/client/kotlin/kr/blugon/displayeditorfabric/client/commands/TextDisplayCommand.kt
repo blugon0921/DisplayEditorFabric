@@ -68,8 +68,8 @@ private fun BrigadierNode.runWithPosition(run: ServerCommandSource.(CommandConte
             then("background" to integer()) {
                 executes {
                     val positionResolver: PosArgument = it["location"]
-                    val position = positionResolver.toAbsolutePos(this)
-                    val rotation = it.get<PosArgument>("rotation").toAbsoluteRotation(this)
+                    val position = positionResolver.getPos(this)
+                    val rotation = it.get<PosArgument>("rotation").getRotation(this)
                     val background: Int by it
                     run(this, it, WorldlessLocation(position, rotation)).also {
                         it.background = background
@@ -78,14 +78,14 @@ private fun BrigadierNode.runWithPosition(run: ServerCommandSource.(CommandConte
             }
             executes {
                 val positionResolver: PosArgument = it["location"]
-                val position = positionResolver.toAbsolutePos(this)
-                val rotation = it.get<PosArgument>("rotation").toAbsoluteRotation(this)
+                val position = positionResolver.getPos(this)
+                val rotation = it.get<PosArgument>("rotation").getRotation(this)
                 run(this, it, WorldlessLocation(position, rotation))
             }
         }
         executes {
             val positionResolver: PosArgument = it["location"]
-            val position = positionResolver.toAbsolutePos(this)
+            val position = positionResolver.getPos(this)
             run(this, it, WorldlessLocation(position))
         }
     }

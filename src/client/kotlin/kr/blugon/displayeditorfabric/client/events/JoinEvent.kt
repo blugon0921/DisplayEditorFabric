@@ -32,7 +32,7 @@ fun registerJoinEvent() {
                             .withHoverEvent(HoverEvent(HoverEvent.Action.SHOW_TEXT, "클릭하여 이동".literal))
                         )
                         .color(NamedTextColor.YELLOW)
-                )
+                , true)
             }
             isFirstJoin = false
         }

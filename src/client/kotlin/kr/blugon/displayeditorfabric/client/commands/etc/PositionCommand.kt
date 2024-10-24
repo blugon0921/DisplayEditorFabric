@@ -16,9 +16,9 @@ fun BrigadierNode.thenPositionEdit() {
         executes {
             val entities = it.getEntities("entities")
             if(!entities.isDisplayList(this)) return@executes
-            val position = it.get<PosArgument>("position").toAbsolutePos(this)
+            val position = it.get<PosArgument>("position").getPos(this)
             entities.forEach { entity->
-                entity.teleport(world, position.x, position.y, position.z, PositionFlag.ROT, entity.yaw, entity.pitch)
+                entity.teleport(world, position.x, position.y, position.z, PositionFlag.ROT, 0f, 0f, false)
             }
             this.sendFeedback(Text.literal("표지 ${entities.size}개의 위치를 [${position.x.floor(6)}, ${position.y.floor(6)}, ${position.z.floor(6)}](으)로 이동시켰습니다"))
         }
@@ -30,9 +30,10 @@ fun BrigadierNode.thenRotationEdit() {
         executes {
             val entities = it.getEntities("entities")
             if(!entities.isDisplayList(this)) return@executes
-            val rotation = it.get<PosArgument>("rotation").toAbsoluteRotation(this)
+            val rotation = it.get<PosArgument>("rotation").getRotation(this)
             entities.forEach { entity->
-                entity.teleport(world, entity.x, entity.y, entity.z, PositionFlag.ROT, rotation.y, rotation.x)
+                entity.yaw = rotation.y
+                entity.pitch = rotation.x
             }
             this.sendFeedback(Text.literal("표지 ${entities.size}개의 회전을 [${rotation.y}, ${rotation.x}](으)로 바꿨습니다"))
         }

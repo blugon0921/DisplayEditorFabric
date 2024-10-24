@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.0.20"
-    id("fabric-loom") version "1.7.1"
-    id("maven-publish")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.fabricLoom)
+    `maven-publish`
 }
 
 version = project.property("mod_version") as String
@@ -40,30 +40,28 @@ repositories {
 }
 
 dependencies {
-    // To change the versions see the gradle.properties file
-    minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
+    minecraft(libs.minecraft)
+    mappings("${libs.yarnMapping.get().group}:${libs.yarnMapping.get().name}:${libs.yarnMapping.get().version}:v2")
+    modImplementation(libs.loader)
+    modImplementation(libs.kotlinLoader)
 
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    modImplementation(libs.fabric)
 
-    modImplementation("com.sk89q.worldedit:worldedit-fabric-mc1.21:latest.release")
+    modImplementation(libs.worldedit)
 }
 
 tasks.processResources {
     inputs.property("version", project.version)
-    inputs.property("minecraft_version", project.property("minecraft_version"))
-    inputs.property("loader_version", project.property("loader_version"))
+    inputs.property("minecraft_version", libs.versions.minecraft.get())
+    inputs.property("loader_version", libs.versions.loader.get())
     filteringCharset = "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand(
             "version" to project.version,
-            "minecraft_version" to project.property("minecraft_version"),
-            "loader_version" to project.property("loader_version"),
-            "kotlin_loader_version" to project.property("kotlin_loader_version")
+            "minecraft_version" to libs.versions.minecraft.get(),
+            "loader_version" to libs.versions.loader.get(),
+            "kotlin_loader_version" to libs.versions.kotlinLoader.get()
         )
     }
 }

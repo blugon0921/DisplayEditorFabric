@@ -123,13 +123,13 @@ private fun BrigadierNode.runWithPosition(run: ServerCommandSource.(CommandConte
     this.then("location" to vec3()) {
         this.then("rotation" to rotation()) {
             executes {
-                val position = it.get<PosArgument>("location").toAbsolutePos(this)
-                val rotation = it.get<PosArgument>("rotation").toAbsoluteRotation(this)
+                val position = it.get<PosArgument>("location").getPos(this)
+                val rotation = it.get<PosArgument>("rotation").getRotation(this)
                 run(this, it, Location(world, position, rotation))
             }
         }
         executes {
-            val position = it.get<PosArgument>("location").toAbsolutePos(this)
+            val position = it.get<PosArgument>("location").getPos(this)
             run(this, it, Location(world, position))
         }
     }
