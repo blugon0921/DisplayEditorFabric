@@ -39,5 +39,6 @@
 ## With WorldEdit
 
 //pastedisplay(paste-d)<br>
-※ Undo 불가 ※<br>
 ※ 디스플레이가 소환될곳에 있는 블럭을 지우고 소환되므로 기존 블럭을 남기려면 뒤에 -not-remove를 붙여주세요 ※
+<br>
+//undodisplays(undo-d)

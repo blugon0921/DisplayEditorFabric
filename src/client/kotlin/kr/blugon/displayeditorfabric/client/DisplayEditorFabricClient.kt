@@ -11,13 +11,16 @@ import kr.blugon.displayeditorfabric.client.events.registerJoinEvent
 import kr.blugon.kotlinbrigadierfabric.get
 import net.fabricmc.api.ClientModInitializer
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.block.BlockState
 import net.minecraft.command.EntitySelector
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityType
 import net.minecraft.entity.SpawnReason
 import net.minecraft.entity.decoration.DisplayEntity
+import net.minecraft.entity.decoration.DisplayEntity.BlockDisplayEntity
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
+import net.minecraft.util.math.BlockPos
 import net.minecraft.world.World
 
 
@@ -71,6 +74,13 @@ inline fun <reified T> World.spawnEntityBukkitStyle(location: WorldlessLocation,
         this.spawnEntity(it)
     } as T
 }
+
+val undoList = ArrayList<UndoData>()
+data class UndoData(
+    val world: World,
+    val blocks: HashMap<BlockPos, BlockState>,
+    val displays: List<BlockDisplayEntity>,
+)
 
 class DisplayEditorFabricClient : ClientModInitializer {
     override fun onInitializeClient() {
