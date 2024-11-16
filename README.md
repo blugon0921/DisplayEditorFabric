@@ -1,7 +1,7 @@
 # Display Editor Fabric
 [![Java](https://img.shields.io/badge/Java-21-FF7700.svg?logo=java)]()
 [![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-186FCC.svg?logo=kotlin)]()
-[![PaperMC](https://img.shields.io/badge/Latest-v1.2.2+mc1.21.3-222222.svg)]()
+[![PaperMC](https://img.shields.io/badge/Latest-v1.2.3+mc1.21.3-222222.svg)]()
 
 # command
 /displayentity (dp)
@@ -38,7 +38,8 @@
 
 ## With WorldEdit
 
-//pastedisplay(paste-d)<br>
+//pastedisplays(paste-d)<br>
 ※ 디스플레이가 소환될곳에 있는 블럭을 지우고 소환되므로 기존 블럭을 남기려면 뒤에 -not-remove를 붙여주세요 ※
+<br>
 <br>
 //undodisplays(undo-d)

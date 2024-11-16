@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos
 fun registerWorldEditCommand() {
     val worldedit = WorldEdit.getInstance() ?: return
     registerCommandHandlers {
-        register("/pastedisplay", "/paste-d") {
+        register("/pastedisplays", "/paste-d") {
             require { this.hasPermissionLevel(2) }
             require { player != null }
 
@@ -84,6 +84,7 @@ private fun ServerCommandSource.pasteDisplay(removeBlock: Boolean = true, worlde
         for (y in minimum.y()..maximum.y()) {
             for (z in minimum.z()..maximum.z()) {
                 val state = clipboard.getBlock(BlockVector3(x, y, z).unRelative(clipboard.origin, location))
+                val adaptedState = FabricAdapter.adapt(state)
                 val block = world.getBlockState(BlockPos(x, y, z))
                 when(FabricAdapter.adapt(state.blockType).defaultState) {
                     Blocks.AIR,
@@ -96,10 +97,11 @@ private fun ServerCommandSource.pasteDisplay(removeBlock: Boolean = true, worlde
                             blocks[BlockPos(x, y, z)] = block
                             world.setBlockState(BlockPos(x, y, z), Blocks.AIR.defaultState)
                         }
+                        if(adaptedState.block == Blocks.AIR) continue
 //                        block.type = BukkitAdapter.adapt(state.blockType) //이게 뭐하는데 쓰는 코드였지?
 //                        block.blockData = BukkitAdapter.adapt(state)
                         Location(world, BlockPos(x, y, z)).spawnEntity<BlockDisplayEntity>(EntityType.BLOCK_DISPLAY) {
-                            it.blockState = FabricAdapter.adapt(state)
+                            it.blockState = adaptedState
                             displays.add(it)
                         }
                         count++
